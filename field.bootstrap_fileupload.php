@@ -10,6 +10,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @author		https://github.com/jasny/bootstrap#authors
  * @copyright           Copyright (c) 2011 - 2013
  * @license		https://github.com/jasny/bootstrap/blob/master/LICENSE
+ * @link        https://github.com/rigobcastro/PyroCMS-Bootstrap-FileUpload-Fieldtype
  * @link		http://rigobcastro.com
  * @link		http://jasny.github.io/bootstrap/index.html
  */
