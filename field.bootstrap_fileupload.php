@@ -171,6 +171,59 @@ class Field_bootstrap_fileupload {
     }
 
     // --------------------------------------------------------------------------
+    
+    /**
+	 * Process before outputting for the plugin
+	 *
+	 * This creates an array of data to be merged with the
+	 * tag array so relationship data can be called with
+	 * a {field.column} syntax
+	 *
+	 * @access	public
+	 * @param	string
+	 * @param	string
+	 * @param	array
+	 * @return	mixed - null or array
+	 */
+	public function pre_output_plugin($input, $params)
+	{
+		if ( ! $input) return null;
+
+		$file_data = array();
+
+		$this->CI->load->config('files/files');
+		$this->CI->load->helper('html');
+
+		$db_obj = $this->CI->db->limit(1)->where('id', $input)->get('files');
+
+		$file = $this->CI->db
+						->limit(1)
+						->select('name, extension, mimetype, filesize,filename')
+						->where('id', $input)
+						->get('files')->row();
+            
+		if ($file)
+		{
+			$file_data['filename']		= $file->name;
+			$file_data['file']			= site_url('files/download/'.$input);
+			$file_data['ext']			= $file->extension;
+			$file_data['mimetype']		= $file->mimetype;
+			$file_data['filesize']		= $file->filesize;
+                        $file_data['fullname']		= $file->filename;
+		}
+		else
+		{
+			$file_data['filename']		= null;
+			$file_data['ext']			= null;
+			$file_data['mimetype']		= null;
+			$file_data['filesize']		= null;
+                        $file_data['fullname']		= null;
+		}
+
+		return $file_data;
+	}
+
+	// --------------------------------------------------------------------------
 
     /**
      * Choose a folder to upload to.
