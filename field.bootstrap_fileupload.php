@@ -56,7 +56,7 @@ class Field_bootstrap_fileupload {
         $out = null;
         $accept_input_html5 = null;
 
-        if (!empty($params['custom']['allowed_types']))
+        if (!empty($params['custom']['allowed_types']) && $params['custom']['allowed_types'] !== '*')
         {
             $allowed_types = explode('|', $params['custom']['allowed_types']);
             
@@ -66,6 +66,8 @@ class Field_bootstrap_fileupload {
                 if (next($allowed_types) == true)
                     $accept_input_html5 .= ",";
             }
+            
+            $accept_input_html5 = 'accept="' . $accept_input_html5.'"';
         }
 
         $out .= '<div class="fileupload fileupload-' . ($current_file ? 'exists' : 'new') . '" data-provides="fileupload" data-name="' . $input_file_name . '">
@@ -76,7 +78,7 @@ class Field_bootstrap_fileupload {
                 </div>
                 <span class="btn btn-file">
                     <span class="fileupload-new">' . lang('streams:bootstrap_fileupload.button:select') . '</span><span class="fileupload-exists">' . lang('streams:bootstrap_fileupload.button:change') . '</span>
-                    <input type="file" name="' . $input_file_name . '" accept="' . $accept_input_html5 . '">
+                    <input type="file" name="' . $input_file_name . '" ' . $accept_input_html5 . '>
                 </span>
                 <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">' . lang('streams:bootstrap_fileupload.button:remove') . '</a>
             </div>
